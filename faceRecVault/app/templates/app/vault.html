@@ -1,0 +1,41 @@
+{% extends "app/home.html" %}
+{% load static %}
+{% load tz %} <!--django timezone tags-->
+
+{% block title %}THE VAULT!{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center mt-5">
+        <h2 id="greeting" style="color: white;">Welcome back, {{username}}!</h2>
+    </div>
+
+    <!--Error messages will be sent here-->
+    <p><span id="errorMsg"></span></p>
+    <!--For loop for all content; in order; classes will be used for alignment-->
+    <div class="row justify-content-center my-4">
+        <ul id="entryList" class="list-group">
+            {% for entry in entries %} <!--entries is a QuerySet object-->
+                <li id="li{{entry.id}}" class="list-group-item">
+                    <span class="mx-3">{{entry.id}}</span>
+                    <span class="mx-3">{{entry.name}}</span>
+                    <button id="o{{entry.id}}" class="btn mx-3">Open</button>
+                    <span class="mx-3">
+                        {{entry.last_edited}}
+                    </span>
+                    <button id="d{{entry.id}}" class="btn mx-3">Delete</button>
+                </li>
+            {% empty %}
+                <li class="list-group-item">
+                    <span>No entries available.</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="row justify-content-center">
+        <button id="createEntry" class="btn">Create an entry</button>
+    </div>
+    
+    <canvas height="600"></canvas>
+{% endblock %}
+
+{% block js %}<script src="{% static 'dist/vault-bundle.js' %}"></script>{% endblock %}

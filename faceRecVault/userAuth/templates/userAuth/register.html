@@ -1,0 +1,22 @@
+{% extends "app/home.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        {{form|crispy}}
+        <button type="submit">Register</button>
+    </form>
+
+    <style>
+        #logBtn, #anything {
+            display: none;
+        }
+    </style>
+
+    <canvas height=500></canvas>
+{% endblock %}
+
+{% block js %}{% endblock %}

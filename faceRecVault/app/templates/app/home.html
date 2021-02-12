@@ -1,0 +1,59 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Welcome to TrogVault{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static '/css/main.css' %}">
+</head>
+<body style="height: 100%;">
+    <nav class="navbar" style="background-image: linear-gradient(rgb(255, 255, 255), rgb(0, 0, 0));">
+        <img src="{% static '/images/logo.png' %}" alt="Failed to load image" class="navLogo" height=55>
+        <span style="color: white; font-size: 18px;" class="mr-6" id="anything">"Where you can literally write anything"</span>
+        <button id="logBtn" class="btn btn-success my-2 my-sm-0" style="margin-right: 10%;">Log In</button>
+    </nav>
+    <div class="content" style="width: 65%; margin: auto;">
+    {% block content %}
+        <div class="row justify-content-center mt-3">
+            <p><span style="color: white;" id="errorMsg">
+                {% if just_registered %}
+                    Enable face recognition by creating an encoding below!
+                {% endif %}
+            </span></p>
+        </div>
+
+        <!--The webcam will be rendered here-->
+        <div class="row justify-content-center mt-3">
+            <!--Error messages will be sent here-->
+            <div class="video-wrap">
+                <video id="video" autoplay playsinline></video>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <button id="snap" class="btn mt-2">Capture Yo Face</button>
+        </div>
+        <div class="row justify-content-center mt-3">
+            <div class="future-loader"></div>
+        </div>
+
+        <!--Trigger canvas API call-->
+        <!--Draw webcam image-->
+        <div class="row justify-content-center my-4">
+            <span id="cutie" style="display: none; color: white;">Your last capture (face_recognition returned: "Ur cute! Try again >:)")</span>
+        </div>
+        <div class="row justify-content-center my-3">
+            <canvas width="640" height="480"></canvas>
+        </div>
+    {% endblock %}
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+{% block js %}
+<script src="{% static 'dist/index-bundle.js' %}"></script>
+{% endblock %}
+</html>
