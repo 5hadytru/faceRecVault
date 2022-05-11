@@ -1,0 +1,64 @@
+{% extends "app/home.html" %}
+{% load static %}
+
+{% block title %}{{name}}{% endblock %}
+
+{% block content %}
+
+    <div id='components' class="justify-content-center my-4 py-3">
+        {% for component in components %}
+
+            {% with cID=component.id %}
+            {% if component.dataType == "Text" %}
+                <div id="txtContainer{{cID}}" class="compContainer my-5 mx-auto" style="width: 50%;">
+                    {% if component.name != "" %}
+                        <p id="txtName{{cID}}" class="txtName font-weight-bold" style="font-size: x-large; text-align: center;" contenteditable="true" spellcheck="false">{{component.name}}</p>
+                    {% endif %}
+                    <p id="txtData{{cID}}" class="txtData" contenteditable="true" spellcheck="false">
+                        {{component.data}}
+                    </p>
+                    <div class="row justify-content-center">
+                        <button id="txtDelete{{cID}}" class="deleteBtn btn btn-danger" style="display: none;">Delete</button>
+                    </div>
+                </div>
+            {% else %}
+                {% with component.imgURL as imgURL  %}
+                <div id="imgContainer{{cID}}" class="compContainer my-5">
+                    <p id="imgName{{cID}}" class="imgName my-2 font-weight-bold" style="font-size: x-large; text-align: center;" contenteditable="true" spellcheck="false">{{component.name}}</p>
+                    <div class="row justify-content-center">
+                        <img id="imgData{{cID}}" class="my-2" src="{% static imgURL %}" alt='Failed to load image'>
+                    </div>
+                    <p id="imgCaption{{cID}}" class="imgCaption my-2" style="text-align: center;" contenteditable="true" spellcheck="false">{{component.caption}}</p>
+                    <div class="row justify-content-center">
+                        <button id="imgDelete{{cID}}" class="deleteBtn btn btn-danger" style="display: none;">Delete</button>
+                    </div>
+                </div>
+                {% endwith %}
+            {% endif %}
+            {% endwith %}
+
+            {% empty %}
+                <p id="empty" style="text-align: center;">This entry is empty!</p>
+        {% endfor %}
+    </div>
+
+    <div id="buttonContainer" class="row mx-auto pr-4" style="width: 50%;">
+        <div class="col">
+            <button id="beautify" class="btn">Beautify!</button>
+        </div>
+        <div class="col">
+            <button id="addText" class="btn">Add text</button>
+        </div>
+        <div class="col">
+            <button id="addImage" class="btn">Add image</button>
+        </div>
+        <div class="col">
+            <button id="saveBtn" class="btn btn-primary">SAVE</button>
+        </div>
+    </div>
+
+    <!--Empty canvas for making the page fill the screen regardless of content amount-->
+    <canvas height=608></canvas>
+{% endblock %}
+
+{% block js %}<script src="{% static 'dist/vaultEntry-bundle.js' %}"></script>{% endblock %}
